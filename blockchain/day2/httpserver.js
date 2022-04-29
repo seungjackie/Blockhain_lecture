@@ -1,8 +1,8 @@
 // 웹에 명령어를 입력해서 내 노드를 제어하는 서버
 import express from 'express';
 import bodyParser from 'body-parser';
-import { getBlocks , createBlock , connectionToPeer} from './block.js';
-import { initP2PServer} from './p2pserver.js';
+import { getBlocks , createBlock} from './block.js';
+import { connectionToPeer , sendMessage ,getPeers} from './p2pserver.js';
 
 const initHttpServer = (myHttpPort) => {
     const app = express();
@@ -14,6 +14,10 @@ const initHttpServer = (myHttpPort) => {
 
     app.get('/blocks', (req,res) =>{
         res.send(getBlocks());
+    })
+
+    app.get('peers', (req,res) =>{
+        res.send(getPeers());
     })
 
     app.post('/blocks/post', (req,res) =>{
@@ -31,6 +35,10 @@ const initHttpServer = (myHttpPort) => {
     app.post('/addpeer', (req,res) => {
         console.log(req.body.data)
         res.send(connectionToPeer(req.body.data))
+    })
+
+    app.get('/sendMessage', (eeq,res) => {
+        sendMessage(req.body.data)
     })
     
 

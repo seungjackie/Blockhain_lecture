@@ -10,7 +10,6 @@
 */
 
 import CryptoJS from 'crypto-js'
-import {WebSocket} from 'ws'
 
 class Block {
     constructor(index, data, timestamp, hash, previousHash,difficulty,nonce){
@@ -173,23 +172,11 @@ const findNonce = (index, data, timestamp , previousHash, difficulty) => {
     }
 }
 
-const initConnection = (ws) => {
-    sockets.push(ws);
-}
 
-const connectionToPeer = (newPeer) => {
-    const ws = new WebSocket(newPeer);
-    ws.on('open', () => {
-        initConnection(ws)
-    })
-    ws.on('error', () => {
-        console.log('Fail to Connection peer : ' , ws.remoteAddress);
-    })
-}
 
 
 // 새로 만들어진 블록이 추가
 const blocks = [createGenesisBlock()];
 
 
-export {getBlocks, createBlock, connectionToPeer}
+export {getBlocks, createBlock}
