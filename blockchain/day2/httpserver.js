@@ -16,7 +16,7 @@ const initHttpServer = (myHttpPort) => {
         res.send(getBlocks());
     })
 
-    app.get('peers', (req,res) =>{
+    app.get('/peers', (req,res) =>{
         res.send(getPeers());
     })
 
@@ -32,13 +32,13 @@ const initHttpServer = (myHttpPort) => {
     })
 
     // 자동으로 찾는 기능이 없다
-    app.post('/addpeer', (req,res) => {
+    app.post('/addPeer', (req,res) => {
         console.log(req.body.data)
         res.send(connectionToPeer(req.body.data))
     })
 
-    app.get('/sendMessage', (eeq,res) => {
-        sendMessage(req.body.data)
+    app.post('/sendMessage', (req,res) => {
+        res.send(sendMessage(req.body.data))
     })
     
 

@@ -4,10 +4,13 @@ import {WebSocketServer} from 'ws'
 
 const MessageType = {
     RESPONSE_MESSAGE : 0,
-    SENT_MESSAGE : 1
+    SEND_MESSAGE : 1
 }
+
+const sockets = [];
+
 const getPeers = () => {
-    const sockets = [];
+    return sockets
 }
 
 const initP2PServer = (p2pPort) => {
@@ -22,7 +25,7 @@ const initP2PServer = (p2pPort) => {
 
 const initConnection = (ws) => {
     sockets.push(ws);
-    initP2PServer(ws)
+    initMessageHandler(ws)
 }
 
 const connectionToPeer = (newPeer) => {
@@ -40,9 +43,10 @@ const initMessageHandler = (ws) => {
         const message = JSON.parse(data);
         
         switch(message.type){
-        //     case MessageType.RESPONSE_MESSAGE:          // 메세지 받앗을때
-        //         break;
-            case MessageType.SENT_MESSAGE:              // 메세지 보낼때
+            case MessageType.RESPONSE_MESSAGE:          // 메세지 받앗을때
+                break;
+            case MessageType.SEND_MESSAGE:              // 메세지 보낼때
+                write(ws, message);
                 console.log(message.message);
                 break;
         }
@@ -50,11 +54,12 @@ const initMessageHandler = (ws) => {
 }
 
 // 보내는거
-const write = () => {
+const write = (ws,message) => {
     console.log('write()',message);
     ws.send(JSON.stringify(message));
 }
 
+// ㅁㅔㅅㅔㅈㅣ 
 const sendMessage = (message) => {
     // 배열로 추가, socket 하나씩 돌아간다 
     sockets.forEach( (socket) => {
