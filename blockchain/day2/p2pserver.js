@@ -4,7 +4,7 @@ import {WebSocketServer} from 'ws'
 
 const MessageType = {
     RESPONSE_MESSAGE : 0,
-    SEND_MESSAGE : 1
+    SENT_MESSAGE : 1
 }
 const getPeers = () => {
     const sockets = [];
@@ -40,10 +40,10 @@ const initMessageHandler = (ws) => {
         const message = JSON.parse(data);
         
         switch(message.type){
-            case MessageType.RESPONSE_MESSAGE:          // 메세지 받앗을때
-                break;
-            case MessageType.SEND_MESSAGE:              // 메세지 보낼때
-                write(ws, message);
+        //     case MessageType.RESPONSE_MESSAGE:          // 메세지 받앗을때
+        //         break;
+            case MessageType.SENT_MESSAGE:              // 메세지 보낼때
+                console.log(message.message);
                 break;
         }
     })
