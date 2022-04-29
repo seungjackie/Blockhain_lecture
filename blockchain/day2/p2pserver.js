@@ -17,4 +17,15 @@ const initConnection = (ws) => {
     sockets.push(ws);
 }
 
+const connectionToPeer = (newPeer) => {
+    const ws = new WebSocket(newPeer);
+    ws.on('open', () => {
+        initConnection(ws)
+    })
+    ws.on('error', () => {
+        console.log('Fail to Connection peer : ' , ws.remoteAddress);
+    })
+}
+
+
 export {initP2PServer}
