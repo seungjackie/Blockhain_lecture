@@ -51,6 +51,7 @@ const initMessageHandler = (ws) => {
 
 // 보내는거
 const write = () => {
+    console.log('write()',message);
     ws.send(JSON.stringify(message));
 }
 
