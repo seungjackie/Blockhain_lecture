@@ -23,6 +23,7 @@ const initP2PServer = (p2pPort) => {
     console.log('listening P2PServer Port : ', p2pPort);
 }
 
+//
 const initConnection = (ws) => {
     sockets.push(ws);
     initMessageHandler(ws)
@@ -59,7 +60,7 @@ const write = (ws,message) => {
     ws.send(JSON.stringify(message));
 }
 
-// ㅁㅔㅅㅔㅈㅣ 
+// 메세지 보내기 
 const sendMessage = (message) => {
     // 배열로 추가, socket 하나씩 돌아간다 
     sockets.forEach( (socket) => {

@@ -1,14 +1,3 @@
-// 블록체인 관련 함수
-// 블록 구조 설계
-
-/* 
-    index : 블록체인의 높이
-    data : 블록에 포함된 모든 데이터(트랜잭션 포함)
-    timestamp : 블록이 생성된 시간
-    hash : 블록 내부 데이터로 생성한 sha256 값
-    previousHash : 이전 블록의 해쉬 (이전 블록을 참조)
-*/
-
 import CryptoJS from 'crypto-js'
 
 class Block {
@@ -155,7 +144,7 @@ const hexToBinary = (hex) => {
             return null;
         }
     }
-    return binary;;
+    return binary;
 }
 
 

@@ -20,9 +20,9 @@ const initHttpServer = (myHttpPort) => {
         res.send(getPeers());
     })
 
-    app.post('/blocks/post', (req,res) =>{
-        res.send(createBlock());
-    })
+    // app.post('/blocks/post', (req,res) =>{
+    //     res.send(createBlock());
+    // })
     
 
     app.post('/create', (req,res) =>{
