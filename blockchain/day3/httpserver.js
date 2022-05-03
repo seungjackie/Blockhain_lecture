@@ -21,7 +21,7 @@ const initHttpServer = (myHttpPort) => {
     })
 
 
-    app.post('mineBlock', (req,res) => {
+    app.post('/mineBlock', (req,res) => {
         res.send(mineBlock(req.body.data));
     })
 

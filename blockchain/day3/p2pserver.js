@@ -37,7 +37,7 @@ const initP2PServer = (p2pPort) => {
 //다른 사람의 Peer 추가했을때 initConnection
 const initConnection = (ws) => {
     sockets.push(ws);
-    console('성공');
+    console.log('성공');
     initMessageHandler(ws);
     // ws.onmessage((e)=> {console.log(e.data)});
 }
@@ -62,7 +62,7 @@ const initMessageHandler = (ws) => {
             case MessageType.QUERY_ALL: // 블록을 요청
                 break;
             case MessageType.RESPONSE_BLOCKCHAIN: // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
-                console.log(ws._socket.remoteAddress, ':' , message.message);
+                console.log(ws._socket.remoteAddress, ':' , message.data);
                 break;
             // case MessageType.RESPONSE_MESSAGE : // 메시지 받았을 때
             //     // console.log(message);
