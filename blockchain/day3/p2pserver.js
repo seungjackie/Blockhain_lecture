@@ -4,7 +4,7 @@
 
 import WebSocket from 'ws';
 import { WebSocketServer } from 'ws';
-import { getBlocks, getLatestBlock , createBlock,addBlock} from './block.js';
+import { getBlocks, getLatestBlock , createBlock,addBlock , isValidNewBlock , /* blocks */} from './block.js';
 
 const MessageType = {
     // RESPONCE_MESSAGE : 0,
@@ -38,7 +38,10 @@ const initP2PServer = (p2pPort) => {
 const initConnection = (ws) => {
     sockets.push(ws);
     console.log('성공');
-    initMessageHandler(ws);
+
+    // 가지고 있는거 다 줘봐
+    write(ws, responseAllMessage())
+    // initMessageHandler(ws);
     // ws.onmessage((e)=> {console.log(e.data)});
 }
 
@@ -60,20 +63,59 @@ const initMessageHandler = (ws) => {
             case MessageType.QUERY_LATEST:  // 응답을 받으면 다시 보내줘야한다.
                 break;
             case MessageType.QUERY_ALL: // 블록을 요청
+                // 요청 하면보내주면 된다.
+                write(ws, responseAllMessage());        // 응답
                 break;
-            case MessageType.RESPONSE_BLOCKCHAIN: // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
+            case MessageType.RESPONSE_BLOCKCHAIN:       // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
+                // 넘어오는 부분
                 console.log(ws._socket.remoteAddress, ':' , message.data);
+                replaceBlockchain(message.data);
+                // handleBlockchainResponse(message)
                 break;
-            // case MessageType.RESPONSE_MESSAGE : // 메시지 받았을 때
-            //     // console.log(message);
-            //     break;
-            // case MessageType.SENT_MESSAGE : // 메시지 보낼 때
-            //     // sendMessage(ws, message);
-            //     // console.log(message.message);
-            //     // console.log(ws_socket.remoteAddress, ' : ', message.message);
-            //     break;
         }
     })
+}
+
+const isValidBlockchain = (receiveBlockchain) => {
+    // 제네시스 블록이 일치 하는가?
+    if (JSON.stringify(receiveBlockchain[0] === JSON.stringify(getBlocks()[0])))
+        return false;
+
+    // 체인 내의 모든 블록을 확인, 바뀌는 block?
+    for (let i =1 ; i< receiveBlockchain.length; i++){
+        if (isValidNewBlock(receiveBlockchain[i], receiveBlockchain[i -1]) == false)
+            return false;
+    }
+    return true;
+}
+
+
+const replaceBlockchain = (receiveBlockchain) => {
+    if (isValidBlockchain(receiveBlockchain)){
+        // 길이
+        let blocks = getBlocks();
+        if(receiveBlockchain.length > blocks.length){
+            console.log('받은 블록체인 길이가 길다')
+            blocks = receiveBlockchain
+        }
+        else if(receiveBlockchain.length == blocks.length && random.boolean()){
+            console.log('받은 블록체인 길이가 같다')
+            blocks = receiveBlockchain
+        }
+    }
+    else {
+        console.log("받을 블록 체인에 문제가 있음")
+    }
+}
+
+
+const handleBlockchainResponse = (receiveBlockchain) => {
+    // 받은 블록체인보다 현재 블록체인이 더 길다.(안 바꿈)
+
+    // 같으면 . (바꾸거나 안 바꿈)
+
+    // 받은 블록체인이 현재 블록체인보다 길면 바꾼다.( 바꿈)
+
 }
 
 const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 발생시키는 함수
@@ -82,6 +124,7 @@ const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 �
             "data" : null   })
 }
 
+// 없다.
 const queryAllMessage = () => { // 다른 노드에 전체블록을 메세지를 만드는 함수
     return ({   
             "type" : MessageType.QUERY_ALL,
