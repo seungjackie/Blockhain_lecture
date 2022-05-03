@@ -38,7 +38,10 @@ const initP2PServer = (p2pPort) => {
 const initConnection = (ws) => {
     sockets.push(ws);
     console('성공');
-    initMessageHandler(ws);
+
+    // 가지고 있는거 다 줘봐
+    write(ws, responseAllMessage())
+    // initMessageHandler(ws);
     // ws.onmessage((e)=> {console.log(e.data)});
 }
 
@@ -60,9 +63,12 @@ const initMessageHandler = (ws) => {
             case MessageType.QUERY_LATEST:  // 응답을 받으면 다시 보내줘야한다.
                 break;
             case MessageType.QUERY_ALL: // 블록을 요청
+                // 요청 하면보내주면 된다.
+                write(ws, responseAllMessage());        // 응답
                 break;
-            case MessageType.RESPONSE_BLOCKCHAIN: // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
-                // console.log(ws._socket.remoteAddress, ':' , message.data);
+            case MessageType.RESPONSE_BLOCKCHAIN:       // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
+                // 넘어오는 부분
+                console.log(ws._socket.remoteAddress, ':' , message.data);
                 replaceBlockchain(message.data);
                 // handleBlockchainResponse(message)
                 break;
@@ -89,9 +95,11 @@ const replaceBlockchain = (receiveBlockchain) => {
         // 길이
         let blocks = getBlocks();
         if(receiveBlockchain.length > blocks.length){
+            console.log('받은 블록체인 길이가 길다')
             blocks = receiveBlockchain
         }
         else if(receiveBlockchain.length == blocks.length && random.boolean()){
+            console.log('받은 블록체인 길이가 같다')
             blocks = receiveBlockchain
         }
     }
@@ -116,6 +124,7 @@ const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 �
             "data" : null   })
 }
 
+// 없다.
 const queryAllMessage = () => { // 다른 노드에 전체블록을 메세지를 만드는 함수
     return ({   
             "type" : MessageType.QUERY_ALL,
