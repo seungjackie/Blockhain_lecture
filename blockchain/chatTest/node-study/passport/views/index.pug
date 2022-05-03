@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Home
+  body 
+    h1 Home
+    if isLoggedIn
+      h2= user.nickname  
+      form( method="get") 
+        input(type="submit", value="mypage", formaction="/mypage")
+        input(type="submit", value="Log Out", formaction="/auth/logout")
+    else
+      form( method="get") 
+        input(type="submit", value="Log In",formaction="/login")
+        input(type="submit", value="Sign In",formaction="/signin")
+        

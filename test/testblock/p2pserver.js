@@ -16,4 +16,4 @@ const initP2PServer = (p2pPort) => {
     }
 }
 
-export {initP2PServer}
+export {}

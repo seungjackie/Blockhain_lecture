@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { getBlocks , createBlock} from './block.js';
-import { connectionToPeer , sendMessage ,getPeers} from './p2pserver.js';
+import { connectionToPeer , getPeers , mineBlock} from './p2pserver.js';
 
 const initHttpServer = (myHttpPort) => {
     const app = express();
@@ -20,12 +20,12 @@ const initHttpServer = (myHttpPort) => {
         res.send(getPeers());
     })
 
-    // app.post('/blocks/post', (req,res) =>{
-    //     res.send(createBlock());
-    // })
-    
 
-    app.post('/create', (req,res) =>{
+    app.post('mineBlock', (req,res) => {
+        res.send(mineBlock(req.body.data));
+    })
+
+    app.post('/createBlock', (req,res) =>{
         // res.send(req.body.data);
         // stiring
         res.send(createBlock(req.body.data));
@@ -37,9 +37,10 @@ const initHttpServer = (myHttpPort) => {
         res.send(connectionToPeer(req.body.data))
     })
 
-    app.post('/sendMessage', (req,res) => {
-        res.send(sendMessage(req.body.data))
-    })
+    // //채팅창
+    // app.post('/sendMessage', (req,res) => {
+    //     res.send(broadcasting(req.body.data))
+    // })
     
 
     app.listen(myHttpPort, () => {

@@ -1,0 +1,15 @@
+extends layout 
+
+block head 
+  link(rel="stylesheet", href="./home.css")
+  title Home 
+
+block page 
+  #home-info 
+    span 접속자: 238명
+    button(type="submit") 방 만들기
+  include includes/roomList
+    
+
+block script 
+  script(src="/home.js") 

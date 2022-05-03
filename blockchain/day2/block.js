@@ -1,14 +1,3 @@
-// 블록체인 관련 함수
-// 블록 구조 설계
-
-/* 
-    index : 블록체인의 높이
-    data : 블록에 포함된 모든 데이터(트랜잭션 포함)
-    timestamp : 블록이 생성된 시간
-    hash : 블록 내부 데이터로 생성한 sha256 값
-    previousHash : 이전 블록의 해쉬 (이전 블록을 참조)
-*/
-
 import CryptoJS from 'crypto-js'
 
 class Block {
@@ -27,6 +16,10 @@ class Block {
 // 블록을 가져온다
 function getBlocks() {
     return blocks;
+}
+
+const getLatestBlock = () => {
+    return blocks[blocks.length - 1];
 }
 
 const calculateHash = (index, data, timestamp, previousHash , difficulty, nonce) => {
@@ -71,15 +64,23 @@ const createBlock = (blockData) => {
     // 블록데이터 = 외부에서 가져오겠다
     const nextHash = calculateHash(nextIndex, blockData , nextTimestamp, previousBlock.hash,nextDiffcutly,nextNonce);
     const newBlock = new Block(nextIndex, blockData, nextTimestamp, nextHash, previousBlock.hash, nextDiffcutly, nextNonce);
-
+    // 우리가 관리하는 블럭
     if(isValidNewBlock(newBlock,previousBlock)) {
+        // 주로 이런 시스템을 사용한다.
         blocks.push(newBlock);
+
         return newBlock;
     }
 
     console.log('fail to create newblock');
     return null;``
 }
+
+// 내가 블록을 체굴했을때 상대방에게 알린다.
+// 상대방의 체인 정보를 가져 올수있는 방법을 하겠다.
+// 
+
+
 
 // 블록의 무결성 검증
 /* 
@@ -155,7 +156,7 @@ const hexToBinary = (hex) => {
             return null;
         }
     }
-    return binary;;
+    return binary;
 }
 
 
@@ -179,4 +180,4 @@ const findNonce = (index, data, timestamp , previousHash, difficulty) => {
 const blocks = [createGenesisBlock()];
 
 
-export {getBlocks, createBlock}
+export {getBlocks, createBlock , getLatestBlock}
