@@ -149,6 +149,6 @@ const findNonce = (index, data, timestamp, previousHash, difficulty) => {
 }
 
 // 블록 담을 곳
-const blocks = [createGenesisBlock()];
+let blocks = [createGenesisBlock()];
 
-export { getBlocks, createBlock, getLatestBlock , addBlock}
+export { getBlocks, createBlock, getLatestBlock , addBlock , isValidNewBlock , blocks}

@@ -4,7 +4,7 @@
 
 import WebSocket from 'ws';
 import { WebSocketServer } from 'ws';
-import { getBlocks, getLatestBlock , createBlock,addBlock} from './block.js';
+import { getBlocks, getLatestBlock , createBlock,addBlock , isValidNewBlock , /* blocks */} from './block.js';
 
 const MessageType = {
     // RESPONCE_MESSAGE : 0,
@@ -62,18 +62,52 @@ const initMessageHandler = (ws) => {
             case MessageType.QUERY_ALL: // 블록을 요청
                 break;
             case MessageType.RESPONSE_BLOCKCHAIN: // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
-                console.log(ws._socket.remoteAddress, ':' , message.message);
+                // console.log(ws._socket.remoteAddress, ':' , message.data);
+                replaceBlockchain(message.data);
+                // handleBlockchainResponse(message)
                 break;
-            // case MessageType.RESPONSE_MESSAGE : // 메시지 받았을 때
-            //     // console.log(message);
-            //     break;
-            // case MessageType.SENT_MESSAGE : // 메시지 보낼 때
-            //     // sendMessage(ws, message);
-            //     // console.log(message.message);
-            //     // console.log(ws_socket.remoteAddress, ' : ', message.message);
-            //     break;
         }
     })
+}
+
+const isValidBlockchain = (receiveBlockchain) => {
+    // 제네시스 블록이 일치 하는가?
+    if (JSON.stringify(receiveBlockchain[0] === JSON.stringify(getBlocks()[0])))
+        return false;
+
+    // 체인 내의 모든 블록을 확인, 바뀌는 block?
+    for (let i =1 ; i< receiveBlockchain.length; i++){
+        if (isValidNewBlock(receiveBlockchain[i], receiveBlockchain[i -1]) == false)
+            return false;
+    }
+    return true;
+}
+
+
+const replaceBlockchain = (receiveBlockchain) => {
+    if (isValidBlockchain(receiveBlockchain)){
+        // 길이
+        let blocks = getBlocks();
+        if(receiveBlockchain.length > blocks.length){
+            blocks = receiveBlockchain
+        }
+        else if(receiveBlockchain.length == blocks.length && random.boolean()){
+            blocks = receiveBlockchain
+        }
+    }
+    else {
+        console.log("받을 블록 체인에 문제가 있음")
+    }
+}
+
+
+const handleBlockchainResponse = (receiveBlockchain) => {
+    // 받은 블록체인보다 현재 블록체인이 더 길다.(안 바꿈)
+
+    // 같으면 . (바꾸거나 안 바꿈)
+
+    // 받은 블록체인이 현재 블록체인보다 길면 바꾼다.( 바꿈)
+
 }
 
 const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 발생시키는 함수
