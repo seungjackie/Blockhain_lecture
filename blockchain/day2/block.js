@@ -18,6 +18,10 @@ function getBlocks() {
     return blocks;
 }
 
+const getLatestBlock = () => {
+    return blocks[blocks.length - 1];
+}
+
 const calculateHash = (index, data, timestamp, previousHash , difficulty, nonce) => {
     return CryptoJS.SHA256((index + data+ timestamp+ previousHash + difficulty + nonce).toString()).toString();
 }
@@ -60,15 +64,23 @@ const createBlock = (blockData) => {
     // 블록데이터 = 외부에서 가져오겠다
     const nextHash = calculateHash(nextIndex, blockData , nextTimestamp, previousBlock.hash,nextDiffcutly,nextNonce);
     const newBlock = new Block(nextIndex, blockData, nextTimestamp, nextHash, previousBlock.hash, nextDiffcutly, nextNonce);
-
+    // 우리가 관리하는 블럭
     if(isValidNewBlock(newBlock,previousBlock)) {
+        // 주로 이런 시스템을 사용한다.
         blocks.push(newBlock);
+
         return newBlock;
     }
 
     console.log('fail to create newblock');
     return null;``
 }
+
+// 내가 블록을 체굴했을때 상대방에게 알린다.
+// 상대방의 체인 정보를 가져 올수있는 방법을 하겠다.
+// 
+
+
 
 // 블록의 무결성 검증
 /* 
@@ -168,4 +180,4 @@ const findNonce = (index, data, timestamp , previousHash, difficulty) => {
 const blocks = [createGenesisBlock()];
 
 
-export {getBlocks, createBlock}
+export {getBlocks, createBlock , getLatestBlock}
