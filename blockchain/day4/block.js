@@ -192,20 +192,19 @@ const isValidBlockchain = (receiveBlockchain) => {
 
 const getAdjustmentDifficulty = () => {
     // 현재 시간, 마지막으로 난이도 조정된 시간. 마지막 블록
-    const prevAdjustment = blocks[blocks.length - DIFFICULTY_ADJUSTMENT_INTERVAL - 1];
+    const prevAdjustBlock = blocks[blocks.length - DIFFICULTY_ADJUSTMENT_INTERVAL - 1];
     const latestBlock = getLatestBlock()
-    const elapseTime = latestBlock.timestamp - prevAdjustment.timestamp;
+    const elapseTime = latestBlock.timestamp - prevAdjustBlock.timestamp;
     const expectedTime = DIFFICULTY_ADJUSTMENT_INTERVAL *  BLOCK_GENERATION_INTERVAL;
 
     if (elapseTime > expectedTime *2) {
         // 난이도를 낮춘다.
         return prevAdjustBlock.difficulty - 1;
-
+        console.log(BLOCK_GENERATION_INTERVAL)
     }
     else if(elapseTime < expectedTime / 2) {
-        // 난이도를 높인다.
+        // 난이도를 높인다.       
         return prevAdjustBlock.difficulty + 1;
-
     }
     else {
         return prevAdjustBlock.difficulty;
