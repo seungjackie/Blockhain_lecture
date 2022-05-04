@@ -1,6 +1,10 @@
 import CryptoJS from 'crypto-js';
 import random from 'random';
 
+// 블록 생성 주기
+const BLOCK_GENERATION_INTERVAL = 10;           // second
+// 난이도
+const DIFFICULTY_ADJUSTMENT_INTERVAL =10;       // gernate block count
 
 class Block {
     constructor(index, data, timestamp, hash, previousHash, difficulty, nonce) {
@@ -24,7 +28,7 @@ const calculateHash = (index, data, timestamp, previousHash, difficulty, nonce) 
 // 16진수 1자리 -> 2진수 4자리 256개의 0과 1로 표현 
 
 const createGenesisBlock = () => {
-    const genesisBlock = new Block(0, 'The Times 03/Jan/2009 Chancellor on brink of second bailout for banks', /* new Date().getTime() / 1000 */ 0, 0, 0, 0, 0);
+    const genesisBlock = new Block(0, 'The Times 03/Jan/2009 Chancellor on brink of second bailout for banks', 0, 0, 0, 1, 0);
 
     genesisBlock.hash = calculateHash(genesisBlock.index, genesisBlock.data, genesisBlock.timestamp, genesisBlock.previousHash, genesisBlock.difficulty, genesisBlock.nonce);
     
@@ -44,7 +48,7 @@ const createBlock = (blockData) => {
     const previousBlock = blocks[blocks.length - 1];
     const nextIndex = previousBlock.index + 1;
     const nextTimestamp = new Date().getTime() / 1000;
-    const nextDifficulty = 1;
+    const nextDifficulty = getDifficulty();
     const nextNonce = findNonce(nextIndex, blockData, nextTimestamp, previousBlock.hash, nextDifficulty);
 
     const nextHash = calculateHash(nextIndex, blockData, nextTimestamp, previousBlock.hash, nextDifficulty, nextNonce);
@@ -137,6 +141,7 @@ const hexToBinary = (hex) => {
     return binary;
 }
 
+// 난이도
 const findNonce = (index, data, timestamp, previousHash, difficulty) => {
     let nonce = 0;
 
@@ -185,6 +190,41 @@ const isValidBlockchain = (receiveBlockchain) => {
     return true;
 }       
 
+const getAdjustmentDifficulty = () => {
+    // 현재 시간, 마지막으로 난이도 조정된 시간. 마지막 블록
+    const prevAdjustment = blocks[blocks.length - DIFFICULTY_ADJUSTMENT_INTERVAL - 1];
+    const latestBlock = getLatestBlock()
+    const elapseTime = latestBlock.timestamp - prevAdjustment.timestamp;
+    const expectedTime = DIFFICULTY_ADJUSTMENT_INTERVAL *  BLOCK_GENERATION_INTERVAL;
+
+    if (elapseTime > expectedTime *2) {
+        // 난이도를 낮춘다.
+        return prevAdjustBlock.difficulty - 1;
+
+    }
+    else if(elapseTime < expectedTime / 2) {
+        // 난이도를 높인다.
+        return prevAdjustBlock.difficulty + 1;
+
+    }
+    else {
+        return prevAdjustBlock.difficulty;
+    }
+}
+
+// 현재 난이도, 난이도를 언제 얻어 와야 하는지?
+const getDifficulty = () => {
+    const latestBlock = getLatestBlock();
+
+    // 난이도 조정 주기 확인, 시간이 아니라 블록이 10 개 생성 될때 마다 조절가능
+    if (latestBlock.index % DIFFICULTY_ADJUSTMENT_INTERVAL === 0 && latestBlock.index !== 0 ) {
+            // 나머지 연산자가 0 이 나올때 30번 째다? 라는 느낌이다.
+            return getAdjustmentDifficulty();
+        }
+    DIFFICULTY_ADJUSTMENT_INTERVAL;
+
+    return latestBlock.difficulty
+}
 
 
 
