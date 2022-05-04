@@ -69,6 +69,7 @@ const addBlock = (newBlock, previousBlock) => {
 
 
 
+
 // 블록의 무결성 검증
 /**
     블록의 인덱스가 이전 블록인덱스보다 1 크다.
@@ -151,18 +152,18 @@ const findNonce = (index, data, timestamp, previousHash, difficulty) => {
 }
 
 const replaceBlockchain = (receiveBlockchain) => {
-    const newBlocks = JSON.parse(receiveBlockchain);
-    console.log(newBlocks)
-    if (isValidBlockchain(newBlocks)){
+    // const newBlocks = JSON.parse(receiveBlockchain);
+    console.log(receiveBlockchain)
+    if (isValidBlockchain(receiveBlockchain)){
         // 길이
         let blocks = getBlocks();
-        if(newBlocks.length > blocks.length){
+        if(receiveBlockchain.length > blocks.length){
             console.log('받은 블록체인 길이가 길다');
-            blocks = newBlocks;
+            blocks = receiveBlockchain;
         }
-        else if(newBlocks.length == blocks.length && random.boolean()){
+        else if(receiveBlockchain.length == blocks.length && random.boolean()){
             console.log('받은 블록체인 길이가 같다');
-            blocks = newBlocks;
+            blocks = receiveBlockchain;
         }
     }
     else {
