@@ -1,4 +1,6 @@
 import CryptoJS from 'crypto-js';
+import random from 'random';
+
 
 class Block {
     constructor(index, data, timestamp, hash, previousHash, difficulty, nonce) {
@@ -148,7 +150,44 @@ const findNonce = (index, data, timestamp, previousHash, difficulty) => {
     }
 }
 
+const replaceBlockchain = (receiveBlockchain) => {
+    const newBlocks = JSON.parse(receiveBlockchain);
+    console.log(newBlocks)
+    if (isValidBlockchain(newBlocks)){
+        // 길이
+        let blocks = getBlocks();
+        if(newBlocks.length > blocks.length){
+            console.log('받은 블록체인 길이가 길다');
+            blocks = newBlocks;
+        }
+        else if(newBlocks.length == blocks.length && random.boolean()){
+            console.log('받은 블록체인 길이가 같다');
+            blocks = newBlocks;
+        }
+    }
+    else {
+        console.log("받을 블록 체인에 문제가 있음")
+    }
+}
+
+
+const isValidBlockchain = (receiveBlockchain) => {
+    // 제네시스 블록이 일치 하는가?
+    if (JSON.stringify(receiveBlockchain[0] === JSON.stringify(getBlocks()[0])))
+        return false;
+
+    // 체인 내의 모든 블록을 확인, 바뀌는 block?
+    for (let i =1 ; i< receiveBlockchain.length; i++){
+        if (isValidNewBlock(receiveBlockchain[i], receiveBlockchain[i -1]) == false)
+            return false;
+    }
+    return true;
+}       
+
+
+
+
 // 블록 담을 곳
 let blocks = [createGenesisBlock()];
 
-export { getBlocks, createBlock, getLatestBlock , addBlock , isValidNewBlock , blocks}
+export { getBlocks, createBlock, getLatestBlock , addBlock , isValidNewBlock , replaceBlockchain }

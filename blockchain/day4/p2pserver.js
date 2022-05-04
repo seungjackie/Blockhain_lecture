@@ -4,7 +4,7 @@
 
 import WebSocket from 'ws';
 import { WebSocketServer } from 'ws';
-import { getBlocks, getLatestBlock , createBlock,addBlock , isValidNewBlock , /* blocks */} from './block.js';
+import { getBlocks, getLatestBlock , createBlock,addBlock , isValidNewBlock , replaceBlockchain} from './block.js';
 
 const MessageType = {
     // RESPONCE_MESSAGE : 0,
@@ -76,37 +76,8 @@ const initMessageHandler = (ws) => {
     })
 }
 
-const isValidBlockchain = (receiveBlockchain) => {
-    // 제네시스 블록이 일치 하는가?
-    if (JSON.stringify(receiveBlockchain[0] === JSON.stringify(getBlocks()[0])))
-        return false;
-
-    // 체인 내의 모든 블록을 확인, 바뀌는 block?
-    for (let i =1 ; i< receiveBlockchain.length; i++){
-        if (isValidNewBlock(receiveBlockchain[i], receiveBlockchain[i -1]) == false)
-            return false;
-    }
-    return true;
-}
 
 
-const replaceBlockchain = (receiveBlockchain) => {
-    if (isValidBlockchain(receiveBlockchain)){
-        // 길이
-        let blocks = getBlocks();
-        if(receiveBlockchain.length > blocks.length){
-            console.log('받은 블록체인 길이가 길다')
-            blocks = receiveBlockchain
-        }
-        else if(receiveBlockchain.length == blocks.length && random.boolean()){
-            console.log('받은 블록체인 길이가 같다')
-            blocks = receiveBlockchain
-        }
-    }
-    else {
-        console.log("받을 블록 체인에 문제가 있음")
-    }
-}
 
 
 const handleBlockchainResponse = (receiveBlockchain) => {
@@ -162,6 +133,8 @@ const mineBlock = (blockData) => {
         broadcasting(responseLatestMessage());
     }
 }
+
+
 
 
 export { initP2PServer, connectionToPeer, getPeers, broadcasting , mineBlock};

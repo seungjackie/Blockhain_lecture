@@ -148,6 +148,21 @@ const findNonce = (index, data, timestamp, previousHash, difficulty) => {
     }
 }
 
+
+const isValidBlockchain = (receiveBlockchain) => {
+    // 제네시스 블록이 일치 하는가?
+    if (JSON.stringify(receiveBlockchain[0] === JSON.stringify(getBlocks()[0])))
+        return false;
+
+    // 체인 내의 모든 블록을 확인, 바뀌는 block?
+    for (let i =1 ; i< receiveBlockchain.length; i++){
+        if (isValidNewBlock(receiveBlockchain[i], receiveBlockchain[i -1]) == false)
+            return false;
+    }
+    return true;
+}
+
+
 // 블록 담을 곳
 let blocks = [createGenesisBlock()];
 
