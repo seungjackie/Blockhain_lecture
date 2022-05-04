@@ -69,8 +69,8 @@ const initMessageHandler = (ws) => {
             case MessageType.RESPONSE_BLOCKCHAIN:       // 누군가 내가 요청한 블록을 보내주었다. (RESPONSE_BLOCK)
                 // 넘어오는 부분
                 console.log(ws._socket.remoteAddress, ':' , message.data);
-                replaceBlockchain(message.data);
-                // handleBlockchainResponse(message)
+                // replaceBlockchain(message.data);
+                handleBlockchainResponse(message.data)
                 break;
         }
     })
@@ -81,12 +81,35 @@ const initMessageHandler = (ws) => {
 
 
 const handleBlockchainResponse = (receiveBlockchain) => {
-    // 받은 블록체인보다 현재 블록체인이 더 길다.(안 바꿈)
+    const newBlocks = JSON.parse(receiveBlockchain);
+    // 받아온 블록의 마지막 인덱스가  내 마지막 블록의 인덱스 보다 크다.
+    const latestNewBlock = newBlocks[newBlocks.length -1];
+    console.log('받아온 마지막 블록 :' , latestNewBlock);
+    const latestMyBlock = getLatestBlock();
+    console.loge('마지막 블록' , latestMyBlock)
 
-    // 같으면 . (바꾸거나 안 바꿈)
+    if ( latestNewBlock.index > latestMyBlock.index){
+        // 받아온 마지막 블록의 피리비어스 해쉬 와 내 마지막 블록의 해쉬를 확인한다./
+        if(latestNewBlock.previousHash == latestMyBlock.previousHash) {
+            if(addBlock(latestNewBlock, latestMyBlock)) {
+                // 제한된 플러딩을 사용한다.
+                broadcasting(responseLatestMessage());
+            }
+        }
+        // 받아온 크기가 전체 크기가 1인 경우 -> 재요청
+        else if (newBlocks.length ===1 )
+        {
+            broadcasting(queryAllMessage());
+        }
 
-    // 받은 블록체인이 현재 블록체인보다 길면 바꾼다.( 바꿈)
-
+        // 그외
+        // 받은 블록체인보다 현재 블록체인이 더 길다.(안 바꿈)
+        // 같으면 . (바꾸거나 안 바꿈)
+        // 받은 블록체인이 현재 블록체인보다 길면 바꾼다.( 바꿈)
+        else {
+            replaceBlockchain(newBlocks);
+        }
+    }
 }
 
 const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 발생시키는 함수
@@ -102,10 +125,11 @@ const queryAllMessage = () => { // 다른 노드에 전체블록을 메세지를
             "data" : null   })
 }
 
+// 배열로 넘겨주기, 형태가 다르기 때문
 const responseLatestMessage = () => { // 요청을 받았을때 나의 마지막 블럭을 요청한 쪽에 전달을 해주는 함수
     return ({   
         "type" : MessageType.RESPONSE_BLOCKCHAIN,
-        "data" : JSON.stringify(getLatestBlock())   })  /* (내가 가지고 있는 체인의 마지막 블록) */
+        "data" : JSON.stringify([getLatestBlock()])   })  /* (내가 가지고 있는 체인의 마지막 블록) */
 }
 
 const responseAllMessage = () => { 
@@ -129,6 +153,7 @@ const broadcasting = (message) => {
 // 채굴 블록 , 외부에서 가져다 쓰겠다
 const mineBlock = (blockData) => {
     const newBlock = createBlock(blockData);
+    console.log(newBlock)
     if(addBlock(newBlock, getLatestBlock())){
         broadcasting(responseLatestMessage());
     }
