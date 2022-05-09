@@ -3,11 +3,11 @@
   border: 1px solid black;
 }
 
-.box-win {
+.box.win {
   border : 10px solid pink;
 }
 
-.box-lose { 
+.box.lose { 
   border : 15px solid yellow;
 }
 

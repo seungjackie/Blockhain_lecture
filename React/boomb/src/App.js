@@ -1,11 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import MineSearch from 'MineSearch'
+import Boom from './component/Boom'
 
 function App() {
   return (
     <div className="App">
-      <MineSearch />
+      <Boom />
     </div>
   );
 }

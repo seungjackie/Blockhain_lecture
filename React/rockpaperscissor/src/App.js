@@ -32,17 +32,30 @@ function App() {
     const [userSelect, setUserSelect] = useState(null) ;
     const [ComputerSelect, setComputerSelect] = useState(null);
     const [result, setResult] = useState(null);
-    const [computerResult, computerSetResult] = useState(null);
+    const [comResult, setComResult] = useState(null);
+
+    // state 하나 더 만들기, 초기값
+    const [gameCount,setGameCount] = useState(10);
+
+    const [winCount , setWinCount] = useState(0);
 
 
     const play = (userChoice) => { 
         setUserSelect(choice[userChoice]) // 객체 배열을 가져오기 위해 [userChoice]를쓴다.
-
         let computerChoice = randomChoice()
         setComputerSelect(computerChoice);
-        let playerResult = judgement(choice[userChoice], computerChoice);
-        setResult(playerResult);
-        computerJudgement(playerResult)
+        let userResult = judgement(choice[userChoice], computerChoice);
+        setResult(userResult);
+        setComResult(comJudgement(userResult))
+
+        // 게임 횟수 
+        setGameCount(gameCount - 1)
+        if (gameCount === 0 ) return false;
+
+        if(userResult == "win") {
+            setWinCount(winCount + 1)
+        }
+
     };
 
     // 승 패
@@ -59,33 +72,26 @@ function App() {
         // 플레이어 와 컴퓨터 리설트가 같음으로 따로 만들어야함
         // 플레이어가 윈이 면 
 
-        if (user.name == computer.name ) {
+        if (user.name === computer.name ) {
             return "tie"
         // 주먹
-        } else if ( user.name == "Rock" )  {
-            return  computer.name == "Scissors"  ? <div className='box-win'> win</div> : <div className='box-lose'>lose</div> 
+        } else if ( user.name === "Rock" )  {
+            return  computer.name === "Scissors" ? "win" : "lose" 
         }
         // 보
-        else if ( user.name == "Paper") {
-            return  computer.name == "Rock" ? "win" : "lose"
+        else if ( user.name === "Paper") {
+            return  computer.name === "Rock" ? "win" : "lose"
         }
         // 가위
-        else if ( user.name == "Scissors") {
-            return  computer.name == "Paper" ? "win" : "lose"
+        else if ( user.name === "Scissors") {
+            return  computer.name === "Paper" ? "win" : "lose"
         }
     }
 
-    const computerJudgement = (playerResult) => {
-        // 컴퓨터만의 judgement 
-        // 조건으로 뭐가들어가는지 확인
-        //  
-        if (playerResult == "tie" ){
-            return "tie"
-        }else if (playerResult == "win"){
-            return "lose"
-        }else if (playerResult == "lose") {
-            return "win"
-        }
+
+    // 컴퓨터의 결과값만
+    const comJudgement = (userResult) => {
+        return userResult === "win" ? "lose" : userResult === "tie" ? "tie" : "win";
     }
 
     const randomChoice = () => { // 객체의 키값이 배열의 아이템으로 들어간다. 
@@ -101,14 +107,16 @@ function App() {
     return (
         <div>
             <div className='main'>
-                <Box title="You" img={choice.scissors.img} item={userSelect} result={result}/>  {/*userSelect는 내가 선택하기 전까지 null이다. */}
-                <Box title="Computer" item={ComputerSelect} result={result}/>
+                <Box title="You" className={result} img={choice.scissors.img} item={userSelect} result={result}/>  {/*userSelect는 내가 선택하기 전까지 null이다. */}
+                <Box title="Computer" className={comResult} item={ComputerSelect} result={comResult}/>
             </div> 
             <div className='main'>
                 <button onClick={() => play("scissors")}>가위</button>
                 <button onClick={() => play("rock")}>바위</button>
                 <button onClick={() => play("paper")}>보</button>
             </div>
+            <div> 남은 횟수: {gameCount} </div>
+            <div> 이긴 횟수 : {winCount} </div>
         </div>
         );
 }
