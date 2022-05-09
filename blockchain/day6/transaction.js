@@ -10,7 +10,7 @@ const getTransactionPool = () => {
     return _.cloneDeep(transactionPool);    // 깊은 복사
 }
 
-let unspnetTxOuts = [];                     // UnspentTxOut[]
+let unspentTxOuts = [];                     // UnspentTxOut[]
 
 
 class UnspentTxOut {
@@ -110,7 +110,7 @@ const sendTransaction = (address, amount) => {
     transactionPool.push(tx);
     
     // 3. 주변 노드에 전파
-    
+
 
     return tx;
 }
@@ -226,3 +226,79 @@ const createTxOuts =(address, amount, leftoverAmount) => {
         return [txOut];
     }
 }
+
+// 중복 검사
+const addToTransactionPool = (transaction) => {
+    // 올발는 트랜젹선인지
+    if (!isValidateTransaction(transaction, unspentTxOuts)) {
+        throw Error('추가하려는 트랜잭션이 올바르지가 않다 !!', transaction);
+    }
+
+    // 중복 되는지?
+    if(isValidateTransaction(transaction)) {
+        throw Error('추가하려는 트랜잭션이 트렌젝션 풀에 않다 !!', transaction);
+    }
+
+    transactionPool.push(transaction);
+}
+
+const isValidateTransaction = (transaction, unspentTxOuts) => {
+    // id 일치
+    if(getTransactionID(transaction) !== transaction.id)  {
+        console.log('invalid transaction : ' , transaction.id);
+        // 왜 false 하는지?
+        return false;
+    }
+
+    const  totalTxInValues = transaction.txInsContent
+        .map((txIn) => getTxInAmount(txIn, unspentTxOuts))          // amount 값을 추출 하는구나, amount 를 찾는다.
+        .reduce((a ,b) => ((a + b) , 0 )) ;                         // 0 은 최소값, 짧은 형태일땐 중괄호 없어도 된다. reduce()데이터 타입에 따라 알아서 바뀐다
+
+    // 필요한건 amount
+    const totalTxOutValues = transaction.txOuts
+        .map((txOut) => txOut.amount)
+        .reduce((a,b) => (a + b) , 0);
+
+    if (totalTxInValues !== totalTxOutValues){
+        console.log('totalTxInValues !== totalTxOutValues id : ', transaction.id);
+        return false
+    }
+}
+
+const getTxInAmount = (txIn, unspentTxOuts) => {
+    // 같은 id , index 에 amount 만 뽑아 낼것이다.
+    // unTransacionOut
+    const findUnspentTxOut = unspentTxOuts.find((uTxO) => uTxO.txOutId === txIn.txOutId &&
+        uTxO.txOutIndex === txIn.txOutIndex);
+
+    return findUnspentTxOut.amount;
+}
+
+// 검사
+const isValidateTxForPool = (transaction) => {
+    // 트랜젝션 풀에 있는 txIns들과 transaction에 txInts 비교해서 같은 것이 있는지 확인
+    const txPoolIns = _(transactionPool)
+        .map((tx) => tx.txIns)
+        .flatten()
+        .value();
+
+    // 판단
+    const containTxIn = ( txIn ) => {
+        return _.find(txPoolIns, (txPoolIn) => {
+            return txIn.txOutIndex === txPoolIn.txOutIndex &&
+                txIn.txOutId === txPoolIn.txOutId;
+        })
+    }
+
+    for (const txIn of transaction.txIns) {
+        if (containTxIn(txIn)) {
+            console.log('이미 존재하는 트랜젝션이다 !! id : ', transaction.id)
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+export {getTransactionPool ,addToTransactionPool}

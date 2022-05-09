@@ -54,8 +54,9 @@ const initHttpServer = (myHttpPort) => {
         const amount = req.body.amount;
 
         sendTransaction(address,amount);
-        
+
     })
+
 
     // //채팅창
     // app.post('/sendMessage', (req,res) => {

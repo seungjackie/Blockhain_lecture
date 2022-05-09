@@ -5,6 +5,8 @@
 import WebSocket from 'ws';
 import { WebSocketServer } from 'ws';
 import { getBlocks, getLatestBlock , createBlock,addBlock , isValidNewBlock , replaceBlockchain} from './block.js';
+import { getTransactionPool, addToTransactionPool} from './transaction.js'
+
 
 const MessageType = {
     // RESPONCE_MESSAGE : 0,
@@ -76,8 +78,10 @@ const initMessageHandler = (ws) => {
                 handleBlockchainResponse(message.data)
                 break;
             case MessageType.QUERY_TRANSACTION_POOL:
+                write(ws, responseTransactionPoolMessage()); 
                 break;
             case MessageType.RESPONSE_TRANSACTION_POOL:
+                handleTransactionPoolResponse(message.data);
                 break;
         }
     })
@@ -119,6 +123,20 @@ const handleBlockchainResponse = (receiveBlockchain) => {
     }
 }
 
+// 트랜젝션 받기
+const handleTransactionPoolResponse = (recieveTransactionPool) => {
+    console.log('reciveTransactionPool : ' , recieveTransactionPool );
+
+    // 배열로 온다.
+    recieveTransactionPool.forEach((transaction) => {
+        addToTransactionPool(transaction)
+
+        // 다시 전파
+
+    })
+}
+
+
 const queryLatestMessage = () => { // 다른 노드에게 다른 메세지를 발생시키는 함수
     return ({   
             "type" : MessageType.QUERY_LATEST,
@@ -145,6 +163,14 @@ const responseAllMessage = () => {
         "data" : JSON.stringify(getBlocks())   }) /* (내가 가지고 있는 전체블록) */
 }
 
+// 보냈을때
+const responseTransactionPoolMessage = () => {
+    return ({   
+        "type" : MessageType.RESPONSE_TRANSACTION_POOL,
+        "data" : JSON.stringify(getTransactionPool())   }) 
+}
+
+
 const write = (ws, message) => { //JSON TYPE을 하나의 문자열을 바꿔서 보낸다.
     // console.log('write()', ws_socket.remoteAddress, ':', message.message);
     ws.send(JSON.stringify(message)); 
@@ -165,8 +191,6 @@ const mineBlock = (blockData) => {
         broadcasting(responseLatestMessage());
     }
 }
-
-
 
 
 export { initP2PServer, connectionToPeer, getPeers, broadcasting , mineBlock};
