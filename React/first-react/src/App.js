@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react'
+import {useState , useEffect} from 'react'
 
 
 function App() {
@@ -10,6 +10,14 @@ function App() {
     setCounter2(counter2 + 1);                      // 비동기 함수
     console.log("counter 는" , counter , "setcounter2 state는 ", counter2);
   }
+
+  useEffect(() => {
+    console.log('useEffect fire')
+  },[])
+
+  useEffect(() => {
+    console.log('useEffect2 fire' , counter2 , value)
+  },[counter2,value])
   return (
     <div>
       <div> {counter}</div>

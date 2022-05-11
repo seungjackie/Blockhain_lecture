@@ -1,0 +1,30 @@
+body {
+  background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHu4fvQm9q3QL82pQbBLmBAu191fY-hXeVew&usqp=CAU);
+  /* background: url(); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  height : 100vh;
+
+}
+
+
+.container {
+  /* 좌우로 정렬 */
+  display: flex;
+  /* 밑으로 버튼 내리기 */
+  flex-direction: column;
+  /*  위 아래 정렬*/
+  justify-content: center;
+  /* 왼쪽 오른쪽 정렬 */
+  align-items: center;
+  /* 헤이트 줘야함 */
+  height: 100vh;
+  
+}
+
+.weather-box {
+  border : 3px solid white;
+  padding : 50px;
+  border-radius :10px;
+  background-color: azure;
+}

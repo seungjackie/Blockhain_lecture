@@ -10,6 +10,7 @@ import { Paper, Rock, Scissors} from './img'
 // 5. 3,4번의 결과를 가지고 누가 이겼는지 승패를 따진다.
 // 6. 승패의 결과에 따라 테두리 색이 바뀐다(이기면-초록, 지면-빨강, 비기면-검정)
 
+// key, value 준다.
 
 // 아이템과 숫자를 연결 시키는 방법은 배열 index 번호 안에 있는 아이템을 가져오면 된다. 객체를 먼저 배열화 시켜야한다.
 const choice = {
@@ -41,6 +42,7 @@ function App() {
 
 
     const play = (userChoice) => { 
+        // (useSelect)
         setUserSelect(choice[userChoice]) // 객체 배열을 가져오기 위해 [userChoice]를쓴다.
         let computerChoice = randomChoice()
         setComputerSelect(computerChoice);
