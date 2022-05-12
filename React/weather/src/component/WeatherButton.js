@@ -2,16 +2,20 @@ import React from 'react'
 import { Button } from 'react-bootstrap';       // 부트 스트랩
 
 
-const WeatherButton = ({cities, setCity}) => {
-  console.log("cities? " ,cities)
+const WeatherButton = ({cities, setCity, initCity, setSelectCity ,city , handleCityChange}) => {
+  // console.log("cities? " ,cities)
+  // console.log("cities? " ,setCity)
   return (
     <div>
-      <Button variant="warning"  >CurrrentLocation</Button>
+      <Button variant="warning" onClick={initCity}  >CurrrentLocation</Button>
       {/* map 필수 */}
       {cities.map((item ,index) => {
-        return <Button variant="warning" key ={index} // 몇번째 인덱스인지?
+        return <Button  key ={index} 
+        // variant="warning"
+        variant={ `${initCity ? "dark" :"warning" }`}
           onClick={()=> {
             setCity(item)
+            console.log(item)
           }}
         >
         {item}

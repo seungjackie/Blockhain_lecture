@@ -2,7 +2,7 @@ import React from 'react'
 
 const WeatherBox = ({weather}) => {
   // 그안에 weather 블러우기리스트럭쳐링
-  console.log("weahter? " , weather)
+  // console.log("weahter? " , weather)
   return (
     <div className="weather-box">
         {/* 초기값 -> null 값 */}
