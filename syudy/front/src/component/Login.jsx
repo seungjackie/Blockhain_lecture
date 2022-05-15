@@ -19,7 +19,7 @@ const Login = (props) => {
         console.log(userid.value, userpw.value);
 
         try {
-        const result = await axios.post('http://localhost:3500/user/login',{
+        const result = await axios.post('http://localhost:3600/user/login',{
             userid:userid.value,
             userpw:userpw.value
         },{
@@ -37,6 +37,13 @@ const Login = (props) => {
 
         // props.onClick()    // 백엔드 결과가 도착했을때
     }
+
+    const handleGet = async () => {
+        e.preventDefault();             // html 보유기능을 다 안되게 하는것  
+        app.get('')
+    }
+    
+
 
 
     return (
