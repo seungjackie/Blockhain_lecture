@@ -32,6 +32,6 @@ app.post("/user/logout",(req,res) => {
     res.send('로그아웃 테스트')
 })
 
-app.listen(3500,
-    console.log("server listening on 3500")
+app.listen(3600,
+    console.log("server listening on 3600")
 );
