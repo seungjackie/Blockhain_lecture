@@ -13,6 +13,26 @@ function App() {
     setIsLogin(!isLogin)      // isLogin true -> false / false -> true
   }
 
+  
+  const loginClick = async (req,res) => {
+    const email = "로그인 때 입력한 이메일"
+    const pwd = "로그인 때 입력한 패스워드"
+    console.log("email : ",email,"password: ",pwd)
+    try {
+        const sql = "select * from where email = ? and password = ?;"
+        const [result] = await pool.query(sql,[email,pwd]); 
+        if(result.length===0){
+          console.log("이메일 비밀번호 불일치")
+        }
+        else{
+          console.log("로그인 완료")
+        }
+    }
+    catch (e) {
+        throw e;
+    }
+  }
+
 
   return (
     <div className="App">

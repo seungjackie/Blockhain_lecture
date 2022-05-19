@@ -41,3 +41,48 @@
     display: flex;
     justify-items: flex-end;
 }
+/*  */
+
+.login-button {
+    display: flex;
+    justify-content: flex-end;
+    cursor: crosshair;
+
+}
+
+.nav-section {
+    justify-content: center;
+    display: flex;
+}
+
+.menu-list {
+    display: flex;
+    /* justify-content: center; */
+    list-style-type: none;
+}
+
+.menu-list li {
+    padding: 10px;
+}
+
+.menu-area {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-search {
+    border-style: none;
+}
+
+.cradimg {
+    width: 100%;
+}
+
+.productcard:hover{  
+    transform: scale(1.4);
+}
+
+.product-img {
+    display: flex;
+    justify-content: flex-end;
+}
