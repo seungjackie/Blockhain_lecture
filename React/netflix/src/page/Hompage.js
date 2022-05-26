@@ -10,16 +10,16 @@ const Hompage = () => {
     const dispatch = useDispatch()
     const {popularMovies , topRatedMovies , upComingMovies, loading} = useSelector(state => state.movie)
 
-    // const moiveList = useSelector((state) => state.)
+  const  getMoviesHompage = async () => {
+    dispatch(movieAction.getMovies())
+  }
 
 
     // 렌더를 하고 호출 됨으로 초기값이 없음으로 에러
     useEffect(() =>{
-        dispatch(movieAction.getMovies());
+      dispatch(movieAction.getMovies());
     },[])
-    // loading 이 트루면 loading 스피너를 보여주고
-    // 로딩이 false 면 데이터를 보여주고
-    // 전체 조건 걸기
+
 
     // 데이터 도착 전 true
     // 데이터 도착 후 false, 에러가 났을때

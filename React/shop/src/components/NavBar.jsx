@@ -22,13 +22,12 @@ const Navbar = () => {
         // enter 클릭시 
         if (event.key === 'Enter') {
             //우리가 입력한 검색어를 읽어와서 url를 바꿔 준다.
-            let keyword = event.target.value            // 이밴트를 대상으로한다
-            
+            let keyword = event.target.value            // 이밴트를 대상으로한다            
             // url을 바꿔준다. 쿼리 값으로 바꾼다
             navigate(`/?q=${keyword}`)
         }
-
     };
+
 
     return (
         <div>

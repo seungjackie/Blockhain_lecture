@@ -22,13 +22,16 @@ import Naviation from './components/Naviation';
 // 12. 영화를 필터링 할수 있다.
 
 function App() {
+
+
+
   return (
     <div className="App">
       <Naviation />
         <Routes>
           <Route path="/" element={<Hompage/>} /> 
           <Route path="/movie" element={<Movie/>} /> 
-          <Route path="/movie:id" element={<MovieDtail/>} /> 
+          <Route path="/movie/:id" element={<MovieDtail />} />
         </Routes>
     </div>
   );

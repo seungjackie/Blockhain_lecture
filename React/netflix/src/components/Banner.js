@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Banner = ({movie}) => {
-  console.log("movie ?????????ㅁㄴㅇㄹㅁㄴㅇㄹ??? " , movie)
+  // console.log("movie ?????????ㅁㄴㅇㄹㅁㄴㅇㄹ??? " , movie)
   return (
     // 객채 형태로 넣을수 있다
     <div className='banner' style={{
