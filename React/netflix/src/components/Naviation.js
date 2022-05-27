@@ -9,38 +9,18 @@ import { movieSearchAction } from "../redux/actions/SearchAction";
 
 const Naviation = () => {
 
-  // 주소값을
-  // let {query} = useParams();
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-
-
   const { movieSearchList } = useSelector(state => state.movie)
   console.log("movieSearchList  Local" , movieSearchList)
-
-  
-
-
-  // form 함수에 무엇읓 추가해야 할지??
-  // const enter
-
-
-  const [name, setName] = useState("");
-
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   alert(`The name you entered was: ${name}`)
-  // }
+  // const [name, setName] = useState("");
 
   const handleSubmit = (event) => {
     // if(event.key === 'Enter'){
     //   event.preventDefault();
     //   console.log("엔터값은? " , event)
     // }
-
     event.preventDefault();
     console.log("엔터값은? " , event)
 
@@ -53,14 +33,15 @@ const Naviation = () => {
   }
 
   const clickToSearch = (event) => {
-    let keyword = event.target.value;
-    console.log("쿼리값은?? " ,keyword)
-    dispatch(movieSearchAction.getSearchMovies(event))
+    // let keyword = event.target.value;
+    // console.log("쿼리값은?? " ,keyword)
+    // dispatch(movieSearchAction.getSearchMovies(event))
+    dispatch(movieSearchAction.getSearchMovies());
   }
 
 
-  useEffect(() => {
-    clickToSearch()
+  useEffect((event) => {
+    clickToSearch(event);
   },[])
 
 
