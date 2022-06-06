@@ -5,17 +5,33 @@ import {Link, useParams} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import { movieSearchAction } from "../redux/actions/SearchAction";
 
-
-
 const Naviation = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+
   const { movieSearchList } = useSelector(state => state.movie)
-  console.log("movieSearchList  Local" , movieSearchList)
+  // console.log("movieSearchList  Local" , movieSearchList)
   // const [name, setName] = useState("");
 
+  const [state, setState] = useState()
+
+  
+
+
+  // 1. 콘솔창에 띄우기
+  const search =  (event) => {
+
+    // target을 데이터로 받아야 함.
+    // state 스테이값을 만들고  state 값으로 만들고 스테이트 만들가
+    let keyword = event.target.value;
+    console.log("쿼리값은?? " ,keyword)
+    setState(keyword)
+  }
+
+
+  // 2. form data 전송
   const handleSubmit = (event) => {
     // if(event.key === 'Enter'){
     //   event.preventDefault();
@@ -23,14 +39,11 @@ const Naviation = () => {
     // }
     event.preventDefault();
     console.log("엔터값은? " , event)
+    dispatch(movieSearchAction.getSearchMovies(state));
+    navigate('movie/search')
 
   }
 
-  const search =  (event) => {
-    // target을 데이터로 받아야 함.
-    let keyword = event.target.value;
-    console.log("쿼리값은?? " ,keyword)
-  }
 
   const clickToSearch = (event) => {
     // let keyword = event.target.value;

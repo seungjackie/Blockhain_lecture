@@ -23,6 +23,7 @@ function App() {
   
   const [authenticate, setAuthenticate] = useState(false) // true면 로그인이 안됌
 
+
   useEffect(()=> {
     console.log("aaa", authenticate)
   },[authenticate])

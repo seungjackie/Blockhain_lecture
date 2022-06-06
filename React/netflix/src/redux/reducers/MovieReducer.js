@@ -27,7 +27,7 @@ function MovieReducer (state=initialState, action) {
                 upComingMovies : payload.upComingMovies,
                 genreList : payload.genreList,
                 loading : false,
-                searchList : payload.searchList,
+                // searchList : payload.searchList,
             }
 
 

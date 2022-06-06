@@ -2,13 +2,11 @@ import React , {useState} from 'react'
 import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import YouTube, { YouTubeProps } from 'react-youtube';
-import { useParams } from 'react-router-dom';
 
 
 
 const MovieTrailer = ({trailer}) => {
 
-    const {query} = useParams();
 
     const [lgShow, setLgShow] = useState(false);
 

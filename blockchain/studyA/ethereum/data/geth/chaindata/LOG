@@ -1,0 +1,76 @@
+=============== May 27, 2022 (KST) ===============
+11:33:56.073803 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:33:56.129220 db@open opening
+11:33:56.129766 version@stat F·[] S·0B[] Sc·[]
+11:33:56.165240 db@janitor F·2 G·0
+11:33:56.165287 db@open done T·36.043791ms
+11:33:56.165957 db@close closing
+11:33:56.166030 db@close done T·72.291µs
+=============== May 27, 2022 (KST) ===============
+11:39:58.988742 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:39:58.988924 version@stat F·[] S·0B[] Sc·[]
+11:39:58.988945 db@open opening
+11:39:58.988994 journal@recovery F·1
+11:39:58.989623 journal@recovery recovering @1
+11:39:59.009381 memdb@flush created L0@2 N·13 S·887B "H\xd5\xd3..v\x96\xd5,v6":"sec..\rs\x1e,v1"
+11:39:59.010216 version@stat F·[1] S·887B[887B] Sc·[0.25]
+11:39:59.082471 db@janitor F·3 G·0
+11:39:59.082501 db@open done T·93.54975ms
+11:54:01.676895 db@close closing
+11:54:01.676994 db@close done T·99.25µs
+=============== May 27, 2022 (KST) ===============
+12:02:06.784569 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:02:06.784927 version@stat F·[1] S·887B[887B] Sc·[0.25]
+12:02:06.784949 db@open opening
+12:02:06.785010 journal@recovery F·1
+12:02:06.785759 journal@recovery recovering @3
+12:02:06.805342 memdb@flush created L0@5 N·290 S·14KiB "\x0e6\xc1..p5\xf2,v300":"\xd5X\xc2..kBf,v301"
+12:02:06.806261 version@stat F·[2] S·15KiB[15KiB] Sc·[0.50]
+12:02:06.881237 db@janitor F·4 G·0
+12:02:06.881270 db@open done T·96.315ms
+12:18:08.229116 db@close closing
+12:18:08.229225 db@close done T·108.584µs
+=============== May 27, 2022 (KST) ===============
+12:19:01.871973 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:19:01.872392 version@stat F·[2] S·15KiB[15KiB] Sc·[0.50]
+12:19:01.872425 db@open opening
+12:19:01.872505 journal@recovery F·1
+12:19:01.873667 journal@recovery recovering @6
+12:19:01.908725 memdb@flush created L0@8 N·17510 S·902KiB "\x1etF..]\x0f\xbf,v17812":"\xd0\xee\xd6..\xbbah,v17813"
+12:19:01.909539 version@stat F·[3] S·918KiB[918KiB] Sc·[0.75]
+12:19:01.985049 db@janitor F·5 G·0
+12:19:01.985077 db@open done T·112.643875ms
+12:19:54.485872 db@close closing
+12:19:54.485951 db@close done T·79.583µs
+=============== May 27, 2022 (KST) ===============
+12:20:29.825920 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:20:29.826248 version@stat F·[3] S·918KiB[918KiB] Sc·[0.75]
+12:20:29.826281 db@open opening
+12:20:29.826372 journal@recovery F·1
+12:20:29.827338 journal@recovery recovering @9
+12:20:29.847660 memdb@flush created L0@11 N·126 S·11KiB "H\x11m..\x97(\xea,v17875":"\xf7Ś..PT\xa9,v17940"
+12:20:29.849122 version@stat F·[4] S·929KiB[929KiB] Sc·[1.00]
+12:20:29.927839 db@janitor F·6 G·0
+12:20:29.927869 db@open done T·101.579125ms
+12:20:29.927896 table@compaction L0·4 -> L1·0 S·929KiB Q·17943
+12:20:30.223710 table@build created L1@14 N·11957 S·679KiB "\x0e6\xc1..p5\xf2,v300":"\xf7Ś..PT\xa9,v17940"
+12:20:30.223791 version@stat F·[0 1] S·679KiB[0B 679KiB] Sc·[0.00 0.01]
+12:20:30.267668 table@compaction committed F-3 S-249KiB Ke·0 D·5982 T·339.72625ms
+12:20:30.267947 table@remove removed @8
+12:20:30.268286 table@remove removed @5
+12:20:30.269041 table@remove removed @2
+12:30:08.575056 db@close closing
+12:30:08.575144 db@close done T·85.917µs
+=============== May 27, 2022 (KST) ===============
+16:11:12.769965 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:11:12.770849 version@stat F·[0 1] S·679KiB[0B 679KiB] Sc·[0.00 0.01]
+16:11:12.770876 db@open opening
+16:11:12.770945 journal@recovery F·1
+16:11:12.771702 journal@recovery recovering @12
+16:11:12.796987 memdb@flush created L0@15 N·5754 S·300KiB "\v\xb0\x80..\a!\xff,v23692":"\xde\xf6)..\xed\xbe\x9b,v23695"
+16:11:12.797920 version@stat F·[1 1] S·980KiB[300KiB 679KiB] Sc·[0.25 0.01]
+16:11:12.856385 db@janitor F·5 G·1
+16:11:12.856400 db@janitor removing table-11
+16:11:12.856491 db@open done T·85.608792ms
+16:15:45.588030 db@close closing
+16:15:45.588448 db@close done T·416.5µs

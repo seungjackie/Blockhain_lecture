@@ -9,10 +9,11 @@ const Hompage = () => {
 
     const dispatch = useDispatch()
     const {popularMovies , topRatedMovies , upComingMovies, loading} = useSelector(state => state.movie)
+    console.log("popularMovies local" , popularMovies)
 
-  const  getMoviesHompage = async () => {
-    dispatch(movieAction.getMovies())
-  }
+  // const  getMoviesHompage = async () => {
+  //   dispatch(movieAction.getMovies())
+  // }
 
 
     // 렌더를 하고 호출 됨으로 초기값이 없음으로 에러
