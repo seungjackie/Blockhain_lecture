@@ -15,7 +15,6 @@ const ProductAll = () => { //api 호출 useEffect에서 해야한다.
         let searchQuery = query.get('q') || "";
         console.log("쿼리값은?",searchQuery);
         dispatch(productAction.getProducts(searchQuery)) //dispatch가 바로 reducer를 가는것이아닌 미들웨어를 거쳐서 간다.
-        
     }
 
     useEffect(()=>{

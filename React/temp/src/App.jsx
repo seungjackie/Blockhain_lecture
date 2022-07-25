@@ -8,9 +8,9 @@ import Style2 from './assets/app2.module.css'
 import axios from 'axios';
 
 import styled from 'styled-components'
-const Style3 = styled.div`
-    color:red
-    `;
+// const Style3 = styled.div`
+//     color:red
+//     `;
 
 
 function App () {

@@ -9,7 +9,6 @@ function getSearchMovies(state) {
         try {
 
             // 검색 key , query값을 받아야 한다..?
-            // 
             const searchApi = await api.get(`/search/movie?api_key=${api_key}&language=en-US&query=${state}&page=1&include_adult=false`)
             // console.log("searchApi Action: ", searchApi )
 

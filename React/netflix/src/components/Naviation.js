@@ -17,9 +17,6 @@ const Naviation = () => {
 
   const [state, setState] = useState()
 
-  
-
-
   // 1. 콘솔창에 띄우기
   const search =  (event) => {
 
