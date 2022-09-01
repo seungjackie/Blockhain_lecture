@@ -25,7 +25,6 @@ function reducer(state=initialState,action) {
                 ...state,
                 id: action.payload.id,
                 password: action.payload.password,
-                a,
             };
         default:
             return {...state}
