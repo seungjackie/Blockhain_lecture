@@ -20,7 +20,7 @@ function solution(array, commands){
     // console.log(array.sort((a,b) => a+ b))
 
     return answer;
-}
+};
 
 
 solution()
