@@ -9,7 +9,7 @@ function App() {
   // 정수 변환
   const arr = []
   // console.log(typeof(parseInt(arr[1])))
-  arr.push(3, "2", "1", 5)
+  arr.push(3, "2", "1", 99, 5, 88, 23, 56)
   // console.log(typeof(arr[1]))
 
   let storeArray = [];
