@@ -11,10 +11,13 @@ function App() {
   // console.log(typeof(parseInt(arr[1])))
   arr.push(3, "2", "1", 99, 5, 88, 23, 56)
   // console.log(typeof(arr[1]))
-
   let storeArray = [];
-
   let minNumber = [];
+
+
+
+
+
 
   for(let i = 0; i < arr.length; i++) {
 
@@ -28,7 +31,7 @@ function App() {
       storeArray.push(arr[i])
     }
 
-    // 비교 하기
+    // 비교 하기 ㄴㄹ
   }
 
   // 임의의 값을 넣어준 것이다.
@@ -46,6 +49,7 @@ function App() {
       min = storeArray[i]
     }
   }
+
   console.log(min,"min")
 
   for(let i=0 ; i<storeArray.length ; i++){
@@ -53,6 +57,7 @@ function App() {
       max = storeArray[i]
     }
   }
+
   console.log(max,"max")
 
 
