@@ -17,7 +17,7 @@ function App() {
   const mapRef = useRef<HTMLDivElement>(null); // 잘 담겨 있는지 확인 하자 / 담겨있지 않다면 null
 
   useEffect(() => {
-    // window.loadMap()
+    // window.loadMap() 
     // let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 
     // let options = { //지도를 생성할 때 필요한 기본 옵션
